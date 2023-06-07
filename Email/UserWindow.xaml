@@ -19,9 +19,9 @@
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <ListBox x:Name="FoldersLbx" Grid.Row="1" Foreground="#344E41" Grid.Column="0" Grid.RowSpan="4" SelectionChanged="FoldersLbx_SelectionChanged" />
+        <ListBox Background="#588157" Foreground="#DAD7CD" x:Name="FoldersLbx" Grid.Row="1" Grid.Column="0" Grid.RowSpan="4" SelectionChanged="FoldersLbx_SelectionChanged" />
         <Button x:Name="Send" Height="75" Width="85" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" BorderBrush="#344E41" Background="#344E41" Content="{materialDesign:PackIcon Kind=EmailSend,Size=40}" materialDesign:ButtonAssist.CornerRadius="22" Margin="10,18,10,19" Click="Send_Click" />
         <Frame x:Name="PageFrame" Grid.Row="0" Grid.Column="1" Grid.RowSpan="5" NavigationUIVisibility="Hidden"/>
-        <ProgressBar x:Name="Progress" Grid.Row="0" Grid.Column="1" Grid.RowSpan="5" Width="100" Height="100" Style="{StaticResource MaterialDesignCircularProgressBar}" Value="0" IsIndeterminate="True" Visibility="Visible" />
+        <ProgressBar x:Name="Progress" Grid.Row="0" Grid.Column="1" Grid.RowSpan="5" Width="100" Height="100" Style="{StaticResource MaterialDesignCircularProgressBar}" Value="0" IsIndeterminate="True" Visibility="Visible" Foreground="#FF4C814F" />
     </Grid>
 </Window>

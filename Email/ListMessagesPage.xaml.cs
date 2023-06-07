@@ -23,86 +23,67 @@ namespace Email
     public partial class ListMessagesPage : Page
     {
         private UserWindow userWindow;
-        private List<string> msgs = new List<string>();
         MessageCollection messages;
+        List<string> messagesList = new List<string>();
         public ListMessagesPage(UserWindow window)
         {
             InitializeComponent();
             userWindow = window;
         }
 
-        private void MessagesLbx_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (MessagesLbx.SelectedItem != null)
-            {
-                string to = "";
-                foreach (var i in (MessagesLbx.SelectedItem as Message).To)
-                    to += i.Address;
-                string from = (MessagesLbx.SelectedItem as Message).From.Address.ToString();
-                string subject = (MessagesLbx.SelectedItem as Message).Subject;
-                ReadLetterPage readLetterPage = new ReadLetterPage();
-                readLetterPage.GetMessage(to, from, subject);
-                userWindow.PageFrame.Content = readLetterPage;
-            }
-        }
 
-        private void Open_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            
-        }
 
         public void Folder(string folder)
         {
-            MessageBox.Show(folder);
-            /*Task.Run(() =>
-            {*/
-                messages = ImapHelper.GetMessagesForFolder(folder);
-           /* });*/
-/*            Task.WaitAll();
-*/            if (messages != null)
+            messages = ImapHelper.GetMessagesForFolder(folder);
+            if (messages != null)
             {
-                /*MessageBox.Show("Works!");
-                *//*foreach (var message in messages)
-                {
-                    msgs.Add(message.Subject);
-                }*/
                 MessagesLbx.ItemsSource = null;
-                /*MessagesLbx.ItemsSource = msgs;*/
-                MessagesLbx.ItemsSource = messages;
+                foreach(Message m in messages)
+                {
+                    messagesList.Add(m.Subject);
+                }
+                MessagesLbx.ItemsSource = messagesList;
             }
             userWindow.Progress.Visibility = Visibility.Hidden;
 
-            MessageBox.Show("Hi!");
         }
 
-        private void MessagesLbx_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void DoubleClickListBox(object sender, MouseButtonEventArgs e)
         {
-            
+            if (MessagesLbx.SelectedItem != null)
+            {
+                OpenningLetter();
+            }
         }
 
         private void MessagesLbx_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(sender.ToString());
             if (sender == Open)
             {
-
-                foreach (var item in (MessagesLbx.SelectedItem as Message).Body.Html)
-                    MessageBox.Show(item.ToString());
-                string to = "";
-                foreach (var i in (MessagesLbx.SelectedItem as Message).To)
-                    to += i.Address;
-                string from = (MessagesLbx.SelectedItem as Message).From.Address.ToString();
-                string subject = (MessagesLbx.SelectedItem as Message).Subject;
-                ReadLetterPage readLetterPage = new ReadLetterPage();
-                readLetterPage.GetMessage(to, from, subject);
-                userWindow.PageFrame.Content = readLetterPage;
+                OpenningLetter();
             }
             else
             {
                 SendLetterPage page = new SendLetterPage(this, userWindow);
-                page.GetAddress((MessagesLbx.SelectedItem as Message).From.Address);
+                page.GetAddress(messages[MessagesLbx.SelectedIndex].From.Address);
                 userWindow.PageFrame.Content = page;
             }
+        }
+        private void OpenningLetter()
+        {
+            var text = messages[MessagesLbx.SelectedIndex].Body.Html;
+            string to = "";
+            foreach (var i in messages[MessagesLbx.SelectedIndex].To)
+            {
+                to = i.Address;
+                break;
+            }
+            string from = messages[MessagesLbx.SelectedIndex].From.Address.ToString();
+            string subject = messages[MessagesLbx.SelectedIndex].Subject;
+            ReadLetterPage readLetterPage = new ReadLetterPage(this, userWindow);
+            readLetterPage.GetMessage(to, from, subject, text);
+            userWindow.PageFrame.Content = readLetterPage;
         }
     }
 }

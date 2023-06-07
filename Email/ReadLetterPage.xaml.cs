@@ -17,35 +17,47 @@ using System.Xml.Linq;
 
 namespace Email
 {
-    /// <summary>
-    /// Логика взаимодействия для ReadLetterPage.xaml
-    /// </summary>
     public partial class ReadLetterPage : Page
     {
+        private ListMessagesPage messagesPage;
+        private UserWindow userWindow;
+
         private string toWhom;
         private string fromWhom;
         private string subject;
         private string message;
-        public ReadLetterPage()
+        public ReadLetterPage(ListMessagesPage list, UserWindow user)
         {
             InitializeComponent();
+            messagesPage = list;
+            userWindow = user;
         }
-        public void GetMessage(string To, string From, string Sub)
+        public void GetMessage(string To, string From, string Sub, string Message)
         {
-            toWhom = To; fromWhom = From; subject = Sub; /*message = Message;*/
+            toWhom = To; fromWhom = From; subject = Sub; message = Message;
             ToWhom.Text = toWhom;
             FromWhom.Text = fromWhom;
             SubjectTbx.Text = subject;
             ConverterRTF.ToRtf(message);
-
-            //подобно тому, что было в лекции про RichTextBox
             var text = new TextRange(MessageRtb.Document.ContentStart, MessageRtb.Document.ContentEnd);
             FileStream fs = new FileStream("msg.rtf", FileMode.Open);
             text.Load(fs, DataFormats.Rtf);
             fs.Close();
 
-            //для очистки
             File.Delete("msg.rtf");
+
+        }
+
+        private void AnswerBT_Click(object sender, RoutedEventArgs e)
+        {
+            SendLetterPage send = new SendLetterPage(messagesPage, userWindow);
+            send.ToTbx.Text = fromWhom;
+            userWindow.PageFrame.Content = send;
+        }
+
+        private void ReturnBT_Click(object sender, RoutedEventArgs e)
+        {
+            userWindow.PageFrame.Content = messagesPage;
         }
     }
 }

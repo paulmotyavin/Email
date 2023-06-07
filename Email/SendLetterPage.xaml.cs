@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Email
 {
@@ -36,7 +40,30 @@ namespace Email
 
         private void ReturnBT_Click(object sender, RoutedEventArgs e)
         {
-            userWindow.PageFrame.Content = listPage;
+            if (userWindow != null || listPage != null)
+            {
+                userWindow.PageFrame.Content = listPage;
+            }
+            else MessageBox.Show("Ошибка! Некуда возвращаться");
+        }
+
+        private void SendBT_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageRtb != null && ToTbx != null && SubjectTbx.Text != null && ComboBx.SelectedItem != null)
+            {
+                var credentials = ImapHelper.GetCredentials();
+                var text = new TextRange(MessageRtb.Document.ContentStart, MessageRtb.Document.ContentEnd);
+                ConverterRTF.ToHtml(text);
+                string txt = File.ReadAllText("send.html");
+                MailMessage m = new MailMessage(credentials.Email, ToTbx.Text, SubjectTbx.Text, txt);
+                m.IsBodyHtml = true;
+                credentials.SmtpHost = (ComboBx.SelectedItem as ComboBoxItem).Tag.ToString();
+                SmtpClient smpt = new SmtpClient(credentials.SmtpHost, 587);
+                smpt.Credentials = new NetworkCredential(credentials.Email, credentials.Pass);
+                smpt.EnableSsl = true;
+                smpt.Send(m);
+            }
+            else MessageBox.Show("Поля и список не должны быть пустыми");
         }
     }
 }

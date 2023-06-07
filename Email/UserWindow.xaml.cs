@@ -19,7 +19,6 @@ namespace Email
     public partial class UserWindow : Window
     {
         private CommonFolderCollection folders = ImapHelper.GetFolders();
-        MessageCollection messages;
         public UserWindow()
         {
             InitializeComponent();
@@ -38,24 +37,6 @@ namespace Email
                 list.Folder(folder);
                 PageFrame.Content = list;
             }
-            /*if (FoldersLbx.SelectedItem != null)
-            {
-                string folder = FoldersLbx.SelectedItem.ToString();
-                Progress.Visibility = Visibility.Visible;
-                Task.Run(() =>
-                {
-                    messages = ImapHelper.GetMessagesForFolder(folder);
-                });
-                Task.WaitAll();
-*//*                Progress.Visibility = Visibility.Hidden;*//*
-                ListMessagesPage list = new ListMessagesPage(this);
-                if (messages != null)
-                {
-*//*                    foreach (var message in MessagesLb)
-                        foreach(var item in message)*//*
-                    PageFrame.Content = list;
-                }
-            }*/
         }
 
         private void Send_Click(object sender, RoutedEventArgs e)

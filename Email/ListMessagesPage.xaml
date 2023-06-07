@@ -9,11 +9,11 @@
       Title="ListMessagesPage">
 
     <Grid>
-        <ListBox x:Name="MessagesLbx" Foreground="#344E41" SelectionChanged="MessagesLbx_SelectionChanged" MenuItem.Click="MessagesLbx_Click" >
+        <ListBox x:Name="MessagesLbx" Foreground="#DAD7CD" Background="#344E41"  MouseDoubleClick="DoubleClickListBox" MenuItem.Click="MessagesLbx_Click" >
             <ListBox.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Name="Open" Header="Открыть" MouseRightButtonDown="Open_MouseRightButtonDown"/>
-                    <MenuItem Name="Answer" Header="Ответить" MouseRightButtonDown="Open_MouseRightButtonDown"/>
+                    <MenuItem Name="Open" Header="Открыть" MenuItem.Click="MessagesLbx_Click" />
+                    <MenuItem Name="Answer" Header="Ответить" MenuItem.Click="MessagesLbx_Click" />
                 </ContextMenu>
             </ListBox.ContextMenu>
         </ListBox>

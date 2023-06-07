@@ -13,6 +13,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.3*"/>
             <ColumnDefinition/>
+            <ColumnDefinition Width="0.15*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -25,37 +26,44 @@
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Column="0" Grid.Row="0" Text="Кому:"/>
-        <TextBlock Grid.Column="0" Grid.Row="1" Text="Тема:"/>
-        <TextBox Name="ToTbx" Grid.Column="1" Grid.Row="0" materialDesign:HintAssist.Hint="Введите отправителя" />
-        <TextBox Name="SubjectTbx" Grid.Column="1" Grid.Row="1" materialDesign:HintAssist.Hint="Введите тему" />
-        <Button Name="ReturnBT" Grid.Column="0" Grid.Row="8" Content="{materialDesign:PackIcon Kind=ArrowBack, Size=25}" Click="ReturnBT_Click" />
-        <Button Name="SendBT" Grid.Column="1" Grid.Row="8" Content="{materialDesign:PackIcon Kind=Send, Size=25}" />
-        <ToolBarTray Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
-            <ToolBar >
-                <Button Command="ApplicationCommands.Cut" Content="{materialDesign:PackIcon Kind=ContentCut,Size=20}" />
-                <Button Command="ApplicationCommands.Copy" Content="{materialDesign:PackIcon Kind=ContentCopy}" />
-                <Button Command="ApplicationCommands.Paste" Content="{materialDesign:PackIcon Kind=ContentPaste}" />
+        <Rectangle Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" Grid.RowSpan="2" Fill="#588157" />
+        <TextBlock VerticalAlignment="Center" FontSize="16pt" Foreground="#344E41" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="0" Text="Кому:"/>
+        <TextBlock VerticalAlignment="Center" FontSize="16pt" Foreground="#344E41" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="1" Text="Тема:"/>
+        <ComboBox x:Name="ComboBx" materialDesign:HintAssist.Hint="Ящик" Padding="5" FontSize="10.5pt" Foreground="#DAD7CD" Grid.Row="0" Grid.Column="3" Margin="5,0,0,0" Background="#3A5A40" BorderBrush="#3A5A40" >
+            <ComboBoxItem Content="Google" Tag="smtp.gmail.com" />
+            <ComboBoxItem Content="Mail" Tag="smtp.mail.ru" />
+            <ComboBoxItem Content="Yandex" Tag="smtp.yandex.ru" />
+            <ComboBoxItem Content="Rambler" Tag="smtp.rambler.ru" />
+        </ComboBox>
+        <TextBox Padding="5" VerticalAlignment="Center" FontSize="14pt" Foreground="#DAD7CD" Background="#344E41" Name="ToTbx" Grid.Column="1" Grid.Row="0" materialDesign:HintAssist.Hint="Введите отправителя" />
+        <TextBox Padding="5" VerticalAlignment="Center" FontSize="14pt" Foreground="#DAD7CD" Background="#344E41" Name="SubjectTbx" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" materialDesign:HintAssist.Hint="Введите тему" />
+        <Button Background="#588157" BorderBrush="#588157" Foreground="Wheat" Name="ReturnBT" Grid.Column="0" Grid.Row="8" Content="{materialDesign:PackIcon Kind=ArrowBack, Size=25}" Click="ReturnBT_Click" />
+        <Button Background="#588157" BorderBrush="#588157" Foreground="Wheat" Name="SendBT" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="8" Content="{materialDesign:PackIcon Kind=Send, Size=25}" Click="SendBT_Click" />
+        <ToolBarTray Grid.Row="2" Background="#344E41" Grid.Column="0" Grid.ColumnSpan="3">
+            <ToolBar Background="#344E41" Foreground="#A3B18A" >
+                <Button Command="ApplicationCommands.Cut" Foreground="#A3B18A" Content="{materialDesign:PackIcon Kind=ContentCut,Size=20}" />
+                <Button Command="ApplicationCommands.Copy" Foreground="#A3B18A" Content="{materialDesign:PackIcon Kind=ContentCopy}" />
+                <Button Command="ApplicationCommands.Paste" Foreground="#A3B18A" Content="{materialDesign:PackIcon Kind=ContentPaste}" />
                 <Separator />
-                <Button Command="ApplicationCommands.Undo" Content="{materialDesign:PackIcon Kind=Undo}" />
-                <Button Command="ApplicationCommands.Redo" Content="{materialDesign:PackIcon Kind=Redo}" />
+                <Button Command="ApplicationCommands.Undo" Foreground="#A3B18A" Content="{materialDesign:PackIcon Kind=Undo}" />
+                <Button Command="ApplicationCommands.Redo" Foreground="#A3B18A" Content="{materialDesign:PackIcon Kind=Redo}" />
                 <Separator />
-                <Button Command="EditingCommands.ToggleBold" Content="{materialDesign:PackIcon Kind=FormatBold}" />
-                <Button Command="EditingCommands.ToggleItalic" Content="{materialDesign:PackIcon Kind=FormatItalic}" />
-                <Button Command="EditingCommands.ToggleUnderline" Content="{materialDesign:PackIcon Kind=FormatUnderline}" />
+                <Button Command="EditingCommands.ToggleBold" Foreground="#A3B18A" Content="{materialDesign:PackIcon Kind=FormatBold}" />
+                <Button Command="EditingCommands.ToggleItalic" Foreground="#A3B18A" Content="{materialDesign:PackIcon Kind=FormatItalic}" />
+                <Button Command="EditingCommands.ToggleUnderline" Foreground="#A3B18A" Content="{materialDesign:PackIcon Kind=FormatUnderline}" />
                 <Separator />
-                
-                <Button Command="EditingCommands.IncreaseFontSize" Content="{materialDesign:PackIcon Kind=FormatFontSizeIncrease}" />
-                <Button Command="EditingCommands.DecreaseFontSize" Content="{materialDesign:PackIcon Kind=FormatFontSizeDecrease}" />
+
+                <Button Command="EditingCommands.IncreaseFontSize" Foreground="#A3B18A" Content="{materialDesign:PackIcon Kind=FormatFontSizeIncrease}" />
+                <Button Command="EditingCommands.DecreaseFontSize" Foreground="#A3B18A" Content="{materialDesign:PackIcon Kind=FormatFontSizeDecrease}" />
                 <Separator />
-                    <Button Content="{materialDesign:PackIcon Kind=ClipboardTextMultipleOutline}"/>
-                <Button Command="EditingCommands.AlignLeft" Content="{materialDesign:PackIcon Kind=FormatAlignLeft}"/>
-                <Button Command="EditingCommands.AlignCenter" Content="{materialDesign:PackIcon Kind=FormatAlignCenter}"/>
-                <Button Command="EditingCommands.AlignRight" Content="{materialDesign:PackIcon Kind=FormatAlignRight}"/>
-                <Button Command="EditingCommands.AlignJustify" Content="{materialDesign:PackIcon Kind=FormatAlignJustify}"/>
+                <Button Foreground="#A3B18A" Content="{materialDesign:PackIcon Kind=ClipboardTextMultipleOutline}"/>
+                <Button Foreground="#A3B18A" Command="EditingCommands.AlignLeft" Content="{materialDesign:PackIcon Kind=FormatAlignLeft}"/>
+                <Button Foreground="#A3B18A" Command="EditingCommands.AlignCenter" Content="{materialDesign:PackIcon Kind=FormatAlignCenter}"/>
+                <Button Foreground="#A3B18A" Command="EditingCommands.AlignRight" Content="{materialDesign:PackIcon Kind=FormatAlignRight}"/>
+                <Button Foreground="#A3B18A" Command="EditingCommands.AlignJustify" Content="{materialDesign:PackIcon Kind=FormatAlignJustify}"/>
             </ToolBar>
         </ToolBarTray>
-        <RichTextBox materialDesign:HintAssist.Hint="Введите сообщение" AcceptsTab="True" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="5" >
+        <RichTextBox Name="MessageRtb" Background="#588157" FontSize="12pt" materialDesign:HintAssist.Hint="Введите сообщение" AcceptsTab="True" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="5" >
             <RichTextBox.Resources>
                 <Style TargetType="{x:Type Paragraph}">
                     <Setter Property="Margin" Value="0"/>

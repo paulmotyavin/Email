@@ -18,8 +18,8 @@ namespace Email
             var d = new Document("msg.html", FileFormat.Html);
             d.SaveToFile("msg.rtf", FileFormat.Rtf);
             d.Close();
-            File.Delete("msg.html");
-        }
+/*            File.Delete("msg.html");
+*/        }
 
         public static void ToHtml(TextRange rtf)
         {
@@ -29,7 +29,7 @@ namespace Email
             var d = new Document("send.rtf", FileFormat.Rtf);
             d.SaveToFile("send.html", FileFormat.Html);
             d.Close();
-            File.Delete("send.rtf");
-        }
+/*            File.Delete("send.rtf");
+*/        }
     }
 }
